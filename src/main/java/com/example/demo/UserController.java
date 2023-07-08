@@ -40,7 +40,7 @@ public class UserController {
      * @param userName  
      * @param date   
      */
-    @PutMapping("/hola/{name}")
+    @PutMapping("/hello/{name}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void saveUser(@PathVariable(value = "name") @Valid String userName, @RequestBody Birthday date) 
     		throws InvalidDateException {
@@ -89,7 +89,7 @@ public class UserController {
      * This API returns a hello birthday message for the given user
      * @param userName  
      */
-    @GetMapping("/hola/{name}")
+    @GetMapping("/hello/{name}")
     public ResponseEntity<Greeting> getBirthday(@PathVariable(value = "name") @Valid String userName) 
     		throws UserNotFoundException {
         
@@ -131,7 +131,7 @@ public class UserController {
     
     
 
-    @GetMapping("/hola")
+    @GetMapping("/all")
     public List<User> getAllUsers() {
         logger.info("Get all users...");
         return repository.findAll();
