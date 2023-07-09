@@ -1,4 +1,4 @@
-name: Node js app deploy to EKS
+name: Hometask app deploy to EKS
 on:
   push:
     branches: [ "main" ]
@@ -33,7 +33,7 @@ jobs:
       env:
         REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         REPOSITORY: hometaskxabi
-        IMAGE_TAG: 1.1
+        IMAGE_TAG: latest
       run: |
         docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
         docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
