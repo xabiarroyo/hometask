@@ -141,7 +141,7 @@ public class UserController {
     public ResponseEntity<Greeting> getGreeting() {
         logger.info("Test page reached");
         Greeting greeting = new Greeting();
-        greeting.setMessage("Hello this is a test page 1");
+        greeting.setMessage("Hello this is a test page 2");
         return ResponseEntity.ok().body(greeting);
     }
 }
