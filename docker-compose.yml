@@ -5,7 +5,7 @@ services:
     network_mode: bridge
     container_name: postgres
     volumes:
-      - C:\datos2:/var/lib/postgresql/data
+      - /var/lib/postgresql/data
     expose:
     - 5432
     ports:
