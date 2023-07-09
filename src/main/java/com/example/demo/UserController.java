@@ -137,5 +137,11 @@ public class UserController {
         return repository.findAll();
     }
 
-
+    @GetMapping("/testpage")
+    public ResponseEntity<Greeting> getGreeting() {
+        logger.info("Test page reached");
+        Greeting greeting = new Greeting();
+        greeting.setMessage("Hello this is a test page");
+        return ResponseEntity.ok().body(greeting);
+    }
 }
