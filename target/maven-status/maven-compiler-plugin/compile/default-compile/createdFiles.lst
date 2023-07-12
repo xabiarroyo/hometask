@@ -1,8 +1,0 @@
-com\example\demo\Birthday.class
-com\example\demo\DemoApplication.class
-com\example\demo\Greeting.class
-com\example\demo\User.class
-com\example\demo\exceptions\UserNotFoundException.class
-com\example\demo\UserController.class
-com\example\demo\exceptions\InvalidDateException.class
-com\example\demo\UserRepository.class
