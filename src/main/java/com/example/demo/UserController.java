@@ -129,19 +129,4 @@ public class UserController {
         return ResponseEntity.ok().body(greeting);
     }
     
-    
-
-    @GetMapping("/all")
-    public List<User> getAllUsers() {
-        logger.info("Get all users...");
-        return repository.findAll();
-    }
-
-    @GetMapping("/testpage")
-    public ResponseEntity<Greeting> getGreeting() {
-        logger.info("Test page reached");
-        Greeting greeting = new Greeting();
-        greeting.setMessage("Hello this is a test page 2");
-        return ResponseEntity.ok().body(greeting);
-    }
 }
