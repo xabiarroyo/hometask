@@ -6,6 +6,8 @@ metadata:
     app: hometaskxabi
 spec:
   replicas: 2
+  strategy:
+    type: RollingUpdate
   selector:
     matchLabels:
       app: hometaskxabi
@@ -14,9 +16,61 @@ spec:
       labels:
         app: hometaskxabi
     spec:
+      volumes:
+      - name: hometaskxabi-db-secrets
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: hometaskxabi-db-credentials
       containers:
         - name: hometaskxabi
           image: 299903181087.dkr.ecr.eu-west-3.amazonaws.com/hometaskxabi:latest
           imagePullPolicy: Always
+          resources:
+            limits:
+              memory: 500Mi
+            requests:
+              cpu: 100m
+              memory: 200Mi
+          startupProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
           ports:
             - containerPort: 8080
+          volumeMounts:
+            - name: hometaskxabi-db-secrets
+            mountPath: "/mnt/db/secrets"
+            readOnly: true
+          env:
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                name: postgres-secrets
+                key: db_username
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: postgres-secrets
+                key: db_password
+      affinity:
+              podAntiAffinity:
+                preferredDuringSchedulingIgnoredDuringExecution:
+                  - weight: 100
+                    podAffinityTerm:
+                      labelSelector:
+                        matchExpressions:
+                          - key: "app"
+                            operator: In
+                            values:
+                            - hometaskxabi
+                      topologyKey: "kubernetes.io/hostname"
